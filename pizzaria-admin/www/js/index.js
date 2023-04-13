@@ -20,7 +20,6 @@ function onDeviceReady() {
     document.getElementById('btnSalvar').addEventListener('click', salvar);
     document.getElementById('btnExcluir').addEventListener('click', excluir);
     document.getElementById('btnCancelar').addEventListener('click', cancelar);
-    carregarPizzas();
 }
 
 function novo() {
@@ -28,9 +27,21 @@ function novo() {
     appcadastro.style.display = 'flex'; // exibe cadastro
 }
 
-function foto() {
-    imagem.style.backgroundColor = 'Blue';
-    //imagem.innerHTML = '<img src="./img/pizza.png" alt=""></img>';
+//ta dando erro
+const foto = () => {
+    navigator.camera.getPicture(onSuccess, 
+                                onFail, 
+                                { quality: 50, 
+                                  destinationType: Camera.DestinationType.DATA_URL }
+                               );  
+    
+    function onSuccess(imageData) {
+        preview.style.backgroundImage = "url('data:image/jpeg;base64," + imageData + "')"; 
+    }  
+    
+    function onFail(message) { 
+        alert('Failed because: ' + message); 
+    }
 }
 
 function salvar() {
@@ -50,18 +61,22 @@ function salvar() {
 }
 
 function excluir() {
-    //deletar pizzas
-    imagem.style.backgroundColor = 'Red';
+    //terminar função de deletar
+    cordova.plugin.http.delete('https://pedidos-pizzaria.glitch.me/admin/pizzas/:PIZZARIA_ID', {}, {}, 
+    function(response) {
+        itensCardapio = JSON.parse(response.data);
+        atualizarTela();
+    }, function(response) {
+        alert(response.error);
+    });
 }
 
 function cancelar() {  
-    applista.style.display = 'flex'; // exibe lista
-    appcadastro.style.display = 'none'; // oculta cadastro
-    console.log('aaaaaa');
-    console.log(applista.style.display);
+    //voltar pra tela inicial
 }
 
 function carregarPizzas() {
+    //terminar função de mostrar as pizzas cadastradas
     cordova.plugin.http.get('https://pedidos-pizzaria.glitch.me/admin/pizzas/:PIZZARIA_ID', {}, {}, 
     function(response) {
         itensCardapio = JSON.parse(response.data);
