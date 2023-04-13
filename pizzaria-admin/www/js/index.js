@@ -1,12 +1,10 @@
 var pizza;
+var preco;
 var imagem;
 var PIZZARIA_ID = 'Pizzaria_Diloko'
 
 var itensCardapio;
 var itemAtual = 0;
-var preco;
-var quantidade;
-var endereco;
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -16,6 +14,7 @@ function onDeviceReady() {
     cordova.plugin.http.setDataSerializer('json');
     imagem = document.getElementById('imagem');
     pizza = document.getElementById('pizza');
+    preco = document.getElementById('preco');
     document.getElementById('btnNovo').addEventListener('click', novo);
     document.getElementById('btnFoto').addEventListener('click', foto);
     document.getElementById('btnSalvar').addEventListener('click', salvar);
@@ -25,8 +24,8 @@ function onDeviceReady() {
 }
 
 function novo() {
-    applista.style.display = 'none'; // exibe lista
-    appcadastro.style.display = 'flex'; // oculta cadastro
+    applista.style.display = 'none'; // oculta lista
+    appcadastro.style.display = 'flex'; // exibe cadastro
 }
 
 function foto() {
@@ -58,6 +57,8 @@ function excluir() {
 function cancelar() {  
     applista.style.display = 'flex'; // exibe lista
     appcadastro.style.display = 'none'; // oculta cadastro
+    console.log('aaaaaa');
+    console.log(applista.style.display);
 }
 
 function carregarPizzas() {
