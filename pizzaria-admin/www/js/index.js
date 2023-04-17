@@ -54,6 +54,7 @@ function salvar() {
     }, function(response) {
         alert(response.error);
     });
+    limpaTela();
     carregarPizzas();
 }
 
@@ -65,6 +66,7 @@ function excluir() {
     }, function(response) {
         alert(response.error);
     });
+    limpaTela();
     carregarPizzas();
 }
 
@@ -90,7 +92,7 @@ function carregarPizzas() {
                 };
                 listaPizzas.appendChild(novo);
             });
-        } alert(response.status);
+        }
     }, function(response) {
         alert(response.error);
     });     
@@ -106,10 +108,8 @@ function carregarDadosPizza(id) {
     }
 }
 
-function attPizza(_id_pizza) {
-    cordova.plugin.http.put('https://pedidos-pizzaria.glitch.me/admin/pizza/', {
-        pizzaId: _id_pizza,
-        pizzaria: PIZZARIA_ID,
+function attPizza(id) {
+    cordova.plugin.http.put('https://pedidos-pizzaria.glitch.me/admin/pizza/'+ PIZZARIA_ID + '/' +  id, {
         pizza: pizza.value,
         preco: preco.value,
         imagem: imagem.style.backgroundImage
@@ -118,4 +118,9 @@ function attPizza(_id_pizza) {
     }, function(response){
         alert(response.error);
     })
+}
+
+function limpaTela() {
+    let listaPizzas = document.getElementById('listaPizzas');
+    listaPizzas.innerText = "";
 }
