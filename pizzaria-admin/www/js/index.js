@@ -54,8 +54,6 @@ function salvar() {
     }, function(response) {
         alert(response.error);
     });
-    limpaTela();
-    carregarPizzas();
 }
 
 function excluir() {
@@ -66,11 +64,11 @@ function excluir() {
     }, function(response) {
         alert(response.error);
     });
-    limpaTela();
-    carregarPizzas();
 }
 
 function cancelar() {  
+    limpaTela();
+    carregarPizzas();
     applista.style.display = 'flex'; // exibe lista
     appcadastro.style.display = 'none'; // oculta cadastro
 }
@@ -109,13 +107,16 @@ function carregarDadosPizza(id) {
 }
 
 function attPizza(id) {
-    cordova.plugin.http.put('https://pedidos-pizzaria.glitch.me/admin/pizza/'+ PIZZARIA_ID + '/' +  id, {
-        pizza: pizza.value,
-        preco: preco.value,
+    cordova.plugin.http.put('https://pedidos-pizzaria.glitch.me/admin/pizza/', {
+        pizzaid: id, 
+        pizzaria: PIZZARIA_ID, 
+        pizza: pizza.value, 
+        preco: preco.value, 
         imagem: imagem.style.backgroundImage
     }, {}, function(response){
         alert(response.status);
     }, function(response){
+        console.log(response.error);
         alert(response.error);
     })
 }
